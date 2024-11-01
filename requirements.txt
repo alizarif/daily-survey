@@ -1,0 +1,5 @@
+pandas
+openpyai
+python-dotenv
+GoogleNews
+openpyxl
