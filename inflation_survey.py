@@ -38,7 +38,7 @@ except Exception as e:
 questions = dict(zip(questions_df['Q_id'], questions_df['Question']))
 
 # Define the number of runs for each assistant
-num_personas = 300  # Total number of runs
+num_personas = 3  # Total number of runs
 num_per_group = num_personas // 3  # Number of runs per group
 
 # Define the run identifier
