@@ -5,6 +5,11 @@ on:
     - cron: '0 * * * *'  # Runs at the start of every hour
   workflow_dispatch:  # Allows manual trigger
 
+# Add permissions block
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   run-survey:
     runs-on: ubuntu-latest
@@ -12,6 +17,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        persist-credentials: true
         
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -23,8 +30,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas openai python-dotenv GoogleNews openpyxl requests
 
-    # Remove the explicit pull step since checkout handles this
-    
     - name: Run survey script
       env:
         api_key4: ${{ secrets.API_KEY10 }}
@@ -32,9 +37,11 @@ jobs:
       
     - name: Commit and push results
       run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add results_*.xlsx
         git commit -m "Add survey results for $(date +'%Y-%m-%d %H:00')" || exit 0
-        # Try to push to the default branch without specifying branch name
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
         git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
