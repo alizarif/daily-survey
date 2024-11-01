@@ -1,5 +1,5 @@
 pandas
-openpyai
+openai
 python-dotenv
 GoogleNews
 openpyxl
