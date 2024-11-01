@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pandas openpyai python-dotenv GoogleNews openpyxl requests
+        pip install pandas openai python-dotenv GoogleNews openpyxl requests
 
     - name: Pull latest changes
       run: |
