@@ -12,8 +12,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # This ensures we have the full history
         
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -25,10 +23,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas openai python-dotenv GoogleNews openpyxl requests
 
-    - name: Pull latest changes
-      run: |
-        git pull origin main
-
+    # Remove the explicit pull step since checkout handles this
+    
     - name: Run survey script
       env:
         api_key4: ${{ secrets.API_KEY10 }}
@@ -40,4 +36,5 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add results_*.xlsx
         git commit -m "Add survey results for $(date +'%Y-%m-%d %H:00')" || exit 0
-        git push origin main
+        # Try to push to the default branch without specifying branch name
+        git push
